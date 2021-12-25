@@ -158,7 +158,7 @@ for url_num in np.arange(0, len(rows)):
     error_mssg=str(e) + ': ' + rows[url_num]
     my_array = np.array([error_mssg])
     df = pd.DataFrame(my_array, columns = ['name'])
-    st.write("You cannot extract content from this page: ", rows[url_num] ,e )
+    st.write("You cannot extract content from this page: ", rows[url_num])
   #dff = dff.append(df)
   #dff.fillna('', inplace=True)
 #st.write(dff)
