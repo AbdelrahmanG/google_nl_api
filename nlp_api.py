@@ -60,9 +60,15 @@ from bs4 import BeautifulSoup
 for url_num in np.arange(0, len(rows)):
   try:
       #r1 = requests.get(url)
-      r1 =Request(rows[url_num] , headers={'Accept-Language': 'en-US;q=0.7,en;q=0.3'})
+      try:
+          r1 =Request(rows[url_num] , headers={'Accept-Language': 'en-US;q=0.7,en;q=0.3'})
+          webpage = urlopen(r1).read()
+      except Exception as e:
+          r1 =Request(rows[url_num] ,  headers={'User-Agent': 'Mozilla/5.0'})
+          webpage = urlopen(r1).read()
+          
       #webpage = r1.content
-      webpage = urlopen(r1).read()
+      
       soup1 = BeautifulSoup(webpage, 'html.parser')
       paragraphs = soup1.find_all('p')
 
@@ -152,7 +158,7 @@ for url_num in np.arange(0, len(rows)):
     error_mssg=str(e) + ': ' + rows[url_num]
     my_array = np.array([error_mssg])
     df = pd.DataFrame(my_array, columns = ['name'])
-    st.write("You cannot extract content from this page: ", rows[url_num])
+    st.write("You cannot extract content from this page: ", rows[url_num] ,e )
   #dff = dff.append(df)
   #dff.fillna('', inplace=True)
 #st.write(dff)
